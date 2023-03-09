@@ -28,7 +28,6 @@ class StoreAnimalRequest extends FormRequest
         $minYear = Carbon::now()->subYears(40)->format('Y');
         $currYear = Carbon::now()->format('Y');
 
-
         return [
             'animal_name' => ['required', 'min:3', 'max:255'],
             'specie_id' => ['required', 'integer', 'min:1'],
@@ -37,4 +36,11 @@ class StoreAnimalRequest extends FormRequest
             'manager_id' => ['required', 'integer', 'min:1'],
         ];
     }
+
+    public function messages() {
+        return [
+            'manager_id.*' => 'Pasirinkite tinkamos specializacijos prižiūrėtoją'
+        ];
+    }
+
 }

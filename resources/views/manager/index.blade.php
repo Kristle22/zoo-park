@@ -15,7 +15,7 @@
                                         <div class="row-item__basic">
                                             <span>{{ $manager->name }} {{ $manager->surname }}
                                             </span>
-                                            <small>
+                                            <small><b>Specialization:</b>
                                                 {{ $manager->getSpecie->name }}
                                             </small>
                                         </div>

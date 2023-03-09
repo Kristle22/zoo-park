@@ -39,5 +39,5 @@ app.component('example-component', ExampleComponent);
 app.mount('#app');
 
 $(document).ready(function () {
-  $('[name=animal_book]').summernote();
+  $('[name=animal_about]').summernote();
 });

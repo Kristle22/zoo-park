@@ -16,7 +16,7 @@
                                 <small class="form-text text-muted">Enter new species name.</small>
                             </div>
                             @csrf
-                            <button type="submit" class="btn btn-info">Update specie</button>
+                            <button type="submit" class="btn btn-info">Update species info</button>
                         </form>
 
                     </div>

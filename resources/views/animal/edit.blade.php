@@ -53,7 +53,7 @@
                                 <small class="form-text text-muted">Select the manager from the list.</small>
                             </div>
                             @csrf
-                            <button type="submit" class="btn btn-primary">Create new</button>
+                            <button type="submit" class="btn btn-primary">Update animal info</button>
                         </form>
                     </div>
                 </div>

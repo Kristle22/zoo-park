@@ -13,13 +13,13 @@
                                 <li class="list-group-item">
                                     <div class="row-item">
                                         <div class="row-item__basic">
-                                            <span>Name: {{ $animal->name }}</span>
-                                            <span>Birth year: {{ $animal->birth_year }}</span>
-                                            <small>Species: {{ $animal->getSpecie->name }}</small>
-                                            <div>
+                                            <span><b>Name:</b> {{ $animal->name }}</span>
+                                            <span><b>Birth year:</b> {{ $animal->birth_year }}</span>
+                                            <small><b>Species:</b> {{ $animal->getSpecie->name }}</small>
+                                            <div><b>About:</b>
                                                 {!! $animal->animal_book !!}
                                             </div>
-                                            <small> Animal manager: {{ $animal->getManager->name }}
+                                            <small> <b>Animal manager:</b> {{ $animal->getManager->name }}
                                                 {{ $animal->getManager->surname }}
                                             </small>
                                         </div>
