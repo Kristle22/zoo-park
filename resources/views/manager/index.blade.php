@@ -18,6 +18,9 @@
                                             <small><b>Specialization:</b>
                                                 {{ $manager->getSpecie->name }}
                                             </small>
+                                            <small>Supervises
+                                                <b>{{ $manager->getAnimals->count() }} animals</b>.
+                                            </small>
                                         </div>
                                         <div class="row-item__btns">
                                             <a href="{{ route('manager.edit', $manager) }}" class="btn btn-info">Edit</a>

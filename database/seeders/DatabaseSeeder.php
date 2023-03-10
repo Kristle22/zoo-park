@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'specie_id' => 1,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
                 'animal_book' => $faker->realText(rand(50, 100)),
-                'manager_id' => rand(1, $manCount)
+                'manager_id' => DB::table('managers')->select('id')->where('specie_id', 1)->get()[rand(0,2)]->id
             ]);
         }
 
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 'specie_id' => 2,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
                 'animal_book' => $faker->realText(rand(50, 100)),
-                'manager_id' => rand(1, $manCount)
+                'manager_id' => DB::table('managers')->select('id')->where('specie_id', 2)->get()[rand(0,2)]->id
             ]);
         }
 
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
                 'specie_id' => 3,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
                 'animal_book' => $faker->realText(rand(50, 100)),
-                'manager_id' => rand(1, $manCount)
+                'manager_id' => DB::table('managers')->select('id')->where('specie_id', 3)->get()[rand(0,2)]->id
             ]);
         }
 
@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
                 'specie_id' => 4,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
                 'animal_book' => $faker->realText(rand(50, 100)),
-                'manager_id' => rand(1, $manCount)
+                'manager_id' => DB::table('managers')->select('id')->where('specie_id', 4)->get()[rand(0,2)]->id
             ]);
         }
 
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
                 'specie_id' => 5,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
                 'animal_book' => $faker->realText(rand(50, 100)),
-                'manager_id' => rand(1, $manCount)
+                'manager_id' => DB::table('managers')->select('id')->where('specie_id', 5)->get()[rand(0,2)]->id
             ]);
         }
     }

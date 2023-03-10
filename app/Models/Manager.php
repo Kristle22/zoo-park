@@ -14,4 +14,9 @@ class Manager extends Model
        return $this->belongsTo('App\Models\Specie', 'specie_id', 'id');
    }
 
+   public function getAnimals()
+    {
+        return $this->hasMany('App\Models\Animal', 'manager_id', 'id');
+    }
+
 }
