@@ -28,18 +28,21 @@ class UpdateAnimalRequest extends FormRequest
     {
         $minYear = Carbon::now()->subYears(40)->format('Y');
         $currYear = Carbon::now()->format('Y'); 
+
         $specieId = $this::all()['specie_id'];
-        _dd($specieId);     
-        foreach(Manager::all() as $manager) {
-            $managerId = $manager->specie_id;
-        }
-            
+        $specMans = Manager::where('specie_id', $specieId)->get();
+        $ids = '';
+
+       foreach($specMans as $spec) {
+        $ids .= $spec->id .',';
+    }
+    // dd($ids);   
         return [
             'animal_name' => ['required', 'min:3', 'max:255'],
             'specie_id' => ['required', 'integer', 'min:1'],
             'animal_birth_year' => ['required', 'numeric', 'digits:4', 'between:'.$minYear.','.$currYear, 'max:'.$currYear],
             'animal_about' => ['required'],
-            'manager_id' => ['required', 'integer', 'min:1', 'in:'.$managerId, ],
+            'manager_id' => ['required', 'integer', 'min:1', 'in:'.$ids]
         ];
     }
 
