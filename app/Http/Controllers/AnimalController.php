@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
+    const PAGE_COUNT = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,38 +20,38 @@ class AnimalController extends Controller
      */
     public function index(Request $request)
     {
-        $species = Specie::all();
-        $managers = Manager::all();
+        $species = Specie::paginate(self::PAGE_COUNT)->withQueryString();
+        $managers = Manager::paginate(self::PAGE_COUNT)->withQueryString();
         
         if ($request->sort) {
             if ('name' == $request->sort && 'asc' == $request->sort_dir) {
-                $animals = Animal::orderBy('name')->get();
+                $animals = Animal::orderBy('name')->paginate(self::PAGE_COUNT)->withQueryString();
             }
             else if ('name' == $request->sort && 'desc' == $request->sort_dir) {
-                $animals = Animal::orderBy('name', 'desc')->get();
+                $animals = Animal::orderBy('name', 'desc')->paginate(self::PAGE_COUNT)->withQueryString();
             }
             else if ('birth_year' == $request->sort && 'asc' == $request->sort_dir) {
-                $animals = Animal::orderBy('birth_year')->get();
+                $animals = Animal::orderBy('birth_year')->paginate(self::PAGE_COUNT)->withQueryString();
             }
             else if ('birth_year' == $request->sort && 'desc' == $request->sort_dir) {
-                $animals = Animal::orderBy('birth_year', 'desc')->get();
+                $animals = Animal::orderBy('birth_year', 'desc')->paginate(self::PAGE_COUNT)->withQueryString();
             }
             else {
-                $animals = Animal::all();  
+                $animals = Animal::paginate(self::PAGE_COUNT)->withQueryString();  
             }
         }
         else if ($request->filter && 'specie' == $request->filter) {
-            $animals = Animal::where('specie_id', $request->specie_id)->get();
+            $animals = Animal::where('specie_id', $request->specie_id)->paginate(self::PAGE_COUNT)->withQueryString();
         }
         else if ($request->filter && 'manager' == $request->filter) {
-            $animals = Animal::where('manager_id', $request->manager_id)->get();
+            $animals = Animal::where('manager_id', $request->manager_id)->paginate(self::PAGE_COUNT)->withQueryString();
         }
         else if ($request->search && 'all' == $request->search) {
 
             $words = explode(' ', $request->s);
             if (count($words) == 1) {
             $animals = Animal::where('name', 'like', '%'.$request->s.'%')
-            ->orWhere('birth_year', 'like', '%'.$request->s.'%')->get();
+            ->orWhere('birth_year', 'like', '%'.$request->s.'%')->paginate(self::PAGE_COUNT)->withQueryString();
             } 
             else {
                 $animals = Animal::where(function($query) use ($words) {
@@ -58,11 +60,11 @@ class AnimalController extends Controller
         ->where(function($query) use ($words) {
         $query->where('name', 'like', '%'.$words[1].'%')
         ->orWhere('birth_year', 'like', '%'.$words[1].'%');
-        })->get();
+        })->paginate(self::PAGE_COUNT)->withQueryString();
     }
 }
         else {
-            $animals = Animal::orderBy('created_at', 'desc')->get();
+            $animals = Animal::orderBy('created_at', 'desc')->paginate(self::PAGE_COUNT)->withQueryString();
         }
   
         return view('animal.index', [
@@ -72,7 +74,7 @@ class AnimalController extends Controller
             'specieId' => $request->specie_id ?? '0',
             'managers' => $managers,
             'managerId' => $request->manager_id ?? '0',
-            'managerOfAnimal' => Animal::where('manager_id', $request->manager_id)->get()[0] ?? '0',
+            'managerOfAnimal' => Animal::where('manager_id', $request->manager_id)->paginate(self::PAGE_COUNT)->withQueryString()[0] ?? '0',
             's' => $request->s ?? ''
         ]);
 
@@ -85,8 +87,8 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        $species = Specie::orderBy('name')->get();
-        $managers = Manager::orderBy('surname')->get();
+        $species = Specie::orderBy('name')->paginate(self::PAGE_COUNT)->withQueryString();
+        $managers = Manager::orderBy('surname')->paginate(self::PAGE_COUNT)->withQueryString();
         return view('animal.create', compact('species'), compact('managers'));
     }
 
@@ -127,8 +129,8 @@ class AnimalController extends Controller
      */
     public function edit(Animal $animal)
     {
-        $species = Specie::orderBy('name')->get();
-        $managers = Manager::orderBy('surname')->get();
+        $species = Specie::orderBy('name')->paginate(self::PAGE_COUNT)->withQueryString();
+        $managers = Manager::orderBy('surname')->paginate(self::PAGE_COUNT)->withQueryString();
         return view('animal.edit',compact('animal'), ['species' => $species, 'managers' =>$managers]);
     }
 

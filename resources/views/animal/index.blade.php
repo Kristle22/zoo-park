@@ -97,6 +97,9 @@
                     </div>
                     @if ($managerOfAnimal || $managerId == '0')
                         <div class="card-body">
+                            <div class="m-3">
+                                {{ $animals->links() }}
+                            </div>
                             <ul class="list-group">
                                 @foreach ($animals as $animal)
                                     <li class="list-group-item">
@@ -123,6 +126,9 @@
                                     </li>
                                 @endforeach
                             </ul>
+                            <div class="m-3">
+                                {{ $animals->links() }}
+                            </div>
                         </div>
                     @else
                         <div class="card-body"> <i>This manager has no animals yet...</i>
