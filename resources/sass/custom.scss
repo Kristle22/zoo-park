@@ -8,19 +8,63 @@
     color: crimson;
     font-size: 120%;
     font-style: italic;
+    fieldset {
+        border: 1px solid blueviolet;
+        margin: 5px;
+        padding: 12px;
+        display: flex;
+        gap: 17px;
+        legend {
+            all: unset;
+            color: blueviolet;
+            font-size: 12px;
+            padding: 6px;
+            text-align: center;
+        }
+        .btn {
+            margin: 3px;
+        }
+    }
+    fieldset.filter {
+        flex-direction: column;
+        .filter-block {
+            display: flex;
+            gap: 20px;
+        }
+        .block * {
+            margin-top: 0;
+        }
+    }
 }
 .card-body button {
     margin-top: 5px;
     float: right;
 }
+.card-body a {
+    margin-right: 5px;
+}
+.btn:hover {
+    color: white;
+}
 .row-item {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    &__img {
+        max-width: 340px;
+        img {
+            height: 200px;
+            width: auto;
+            max-width: 100%;
+        }
+    }
     &__basic {
         display: flex;
         flex-direction: column;
+        max-width: 180px;
+        margin: 10px;
         small {
             color: gray;
             font-style: italic;
@@ -29,8 +73,56 @@
     }
     &__btns {
         display: flex;
+        max-width: 200px;
+        margin: 10px 0;
     }
     .btn {
         margin: 3px;
+    }
+}
+
+.pagination {
+    flex-wrap: wrap;
+}
+.pagination li {
+    margin-bottom: 3px;
+}
+
+.item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    &__img {
+        img {
+            height: 200px;
+            width: auto;
+            max-width: 100%;
+        }
+    }
+    &__basic {
+        flex-wrap: wrap;
+        font-size: 15px;
+        letter-spacing: 1;
+        padding: 11px;
+        margin: 12px;
+        width: 60%;
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid rgb(96, 146, 207);
+        border-radius: 3px;
+        p {
+            margin: 0;
+        }
+    }
+    &__about {
+        padding: 15px;
+    }
+}
+.img {
+    img {
+        height: 200px;
+        width: auto;
+        max-width: 100%;
     }
 }

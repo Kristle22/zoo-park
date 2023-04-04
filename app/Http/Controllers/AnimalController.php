@@ -7,6 +7,7 @@ use App\Models\Specie;
 use App\Models\Manager;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
+use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
@@ -15,10 +16,65 @@ class AnimalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $animals = Animal::orderBy('name')->get();
-        return view('animal.index', ['animals' => $animals]);
+        $species = Specie::all();
+        $managers = Manager::all();
+        
+        if ($request->sort) {
+            if ('name' == $request->sort && 'asc' == $request->sort_dir) {
+                $animals = Animal::orderBy('name')->get();
+            }
+            else if ('name' == $request->sort && 'desc' == $request->sort_dir) {
+                $animals = Animal::orderBy('name', 'desc')->get();
+            }
+            else if ('birth_year' == $request->sort && 'asc' == $request->sort_dir) {
+                $animals = Animal::orderBy('birth_year')->get();
+            }
+            else if ('birth_year' == $request->sort && 'desc' == $request->sort_dir) {
+                $animals = Animal::orderBy('birth_year', 'desc')->get();
+            }
+            else {
+                $animals = Animal::all();  
+            }
+        }
+        else if ($request->filter && 'specie' == $request->filter) {
+            $animals = Animal::where('specie_id', $request->specie_id)->get();
+        }
+        else if ($request->filter && 'manager' == $request->filter) {
+            $animals = Animal::where('manager_id', $request->manager_id)->get();
+        }
+        else if ($request->search && 'all' == $request->search) {
+
+            $words = explode(' ', $request->s);
+            if (count($words) == 1) {
+            $animals = Animal::where('name', 'like', '%'.$request->s.'%')
+            ->orWhere('birth_year', 'like', '%'.$request->s.'%')->get();
+            } 
+            else {
+                $animals = Animal::where(function($query) use ($words) {
+                    $query->where('name', 'like', '%'.$words[0].'%')->orWhere('birth_year', 'like', '%'.$words[0].'%');
+            })
+        ->where(function($query) use ($words) {
+        $query->where('name', 'like', '%'.$words[1].'%')
+        ->orWhere('birth_year', 'like', '%'.$words[1].'%');
+        })->get();
+    }
+}
+        else {
+            $animals = Animal::orderBy('created_at', 'desc')->get();
+        }
+  
+        return view('animal.index', [
+            'animals' => $animals,
+            'sortDirection' => $request->sort_dir ?? 'asc',
+            'species' => $species,
+            'specieId' => $request->specie_id ?? '0',
+            'managers' => $managers,
+            'managerId' => $request->manager_id ?? '0',
+            'managerOfAnimal' => Animal::where('manager_id', $request->manager_id)->get()[0] ?? '0',
+            's' => $request->s ?? ''
+        ]);
 
     }
 
