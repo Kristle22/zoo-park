@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
-    const PAGE_COUNT = 10;
+    const PAGE_COUNT = 5;
 
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class AnimalController extends Controller
      */
     public function index(Request $request)
     {
-        $species = Specie::paginate(self::PAGE_COUNT)->withQueryString();
-        $managers = Manager::paginate(self::PAGE_COUNT)->withQueryString();
+        $species = Specie::orderBy('name')->get();
+        $managers = Manager::orderBy('name')->get();
         
         if ($request->sort) {
             if ('name' == $request->sort && 'asc' == $request->sort_dir) {
