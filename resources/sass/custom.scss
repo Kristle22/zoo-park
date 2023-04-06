@@ -3,7 +3,14 @@
     font-family: cursive;
     font-weight: 900;
 }
-
+small {
+    font-size: 13px;
+}
+.card-header.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .card-header {
     color: crimson;
     font-size: 120%;

@@ -8,6 +8,7 @@ use App\Models\Manager;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AnimalController extends Controller
 {
@@ -118,7 +119,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        //
+        return view('animal.show', compact('animal'));
     }
 
     /**
@@ -163,4 +164,9 @@ class AnimalController extends Controller
         $animal->delete();
         return redirect()->route('animal.index')->with('success_message', 'Gyvūnas sėkmingai ištrintas.');
     }
+    public function pdf(Animal $animal) {
+        $pdf = Pdf::loadView('animal.pdf', compact('animal'));
+        return $pdf->download(ucfirst($animal->name).'-'.$animal->getSpecie->name.'.pdf');
+    }
+
 }

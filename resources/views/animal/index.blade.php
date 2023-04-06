@@ -117,6 +117,8 @@
                                             </div>
                                             <div class="row-item__btns">
                                                 <a href="{{ route('animal.edit', $animal) }}" class="btn btn-info">Edit</a>
+                                                <a href="{{ route('animal.show', $animal) }}"
+                                                    class="btn btn-warning">Show</a>
                                                 <form method="POST" action="{{ route('animal.destroy', $animal) }}">
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                     @csrf

@@ -48,6 +48,7 @@ Route::group(['prefix' => 'species'], function(){
     Route::post('update/{animal}', [AnimalController::class, 'update'])->name('animal.update');
     Route::post('delete/{animal}', [AnimalController::class, 'destroy'])->name('animal.destroy');
     Route::get('show/{animal}', [AnimalController::class, 'show'])->name('animal.show');
+    Route::get('pdf/{animal}', [AnimalController::class, 'pdf'])->name('animal.pdf');
  });
  
 
