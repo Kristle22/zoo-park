@@ -9,6 +9,7 @@ use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class AnimalController extends Controller
 {
@@ -112,6 +113,11 @@ class AnimalController extends Controller
             $destinationPath = public_path().'/animals-images/';
             $file->move($destinationPath, $name);
             $animal->photo = asset('/animals-images/'.$name);
+
+            // image intervention
+            $img = Image::make($destinationPath.$name);
+            $img->gamma(5.6)->flip('v');
+            $img->save($destinationPath.$name);
         }
         $animal->name = $request->animal_name;
         $animal->specie_id = $request->specie_id;
