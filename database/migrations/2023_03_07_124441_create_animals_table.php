@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->unsignedBigInteger('specie_id');
             $table->unsignedSmallInteger('birth_year');
+            $table->string('photo', 200)->nullable(); 
             $table->text('animal_book');
             $table->unsignedBigInteger('manager_id');
             $table->foreign('specie_id')->references('id')->on('species');

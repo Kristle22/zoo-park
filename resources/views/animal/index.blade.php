@@ -103,6 +103,13 @@
                             <ul class="list-group">
                                 @foreach ($animals as $animal)
                                     <li class="list-group-item">
+                                        <div class="row-item__img">
+                                            @if ($animal->photo)
+                                                <img src="{{ $animal->photo }}" alt="{{ $animal->name }}">
+                                            @else
+                                                <img src="{{ asset('img/no-img.png') }}" alt="{{ $animal->name }}">
+                                            @endif
+                                        </div>
                                         <div class="row-item">
                                             <div class="row-item__basic">
                                                 <span><b>Name:</b> {{ $animal->name }}</span>

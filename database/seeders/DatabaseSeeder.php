@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('lt_LT');
+        $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
 
         DB::table('users')->insert([
             'name' => 'Kristina',
@@ -46,52 +47,72 @@ class DatabaseSeeder extends Seeder
 
         $minYear = Carbon::now()->subYears(40)->format('Y');
         $currYear = Carbon::now()->format('Y');
-
+        
         foreach(range(1, count(MAMMALS)) as $k => $_) {
+            $name = MAMMALS[$k];
+            $photo = $faker->image($dir=public_path().'/animals-images', 300, 200, ["$name"], false);
+            $photoPath = asset('zoo-park/public/animals-images/'.$photo);
             DB::table('animals')->insert([
-                'name' => MAMMALS[$k],
+                'name' => $name,
                 'specie_id' => 1,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
+                'photo' => rand(0, 3) ? $photoPath : null,
                 'animal_book' => $faker->realText(rand(50, 100)),
                 'manager_id' => DB::table('managers')->select('id')->where('specie_id', 1)->get()[rand(0,2)]->id
             ]);
         }
 
         foreach(range(1, count(AMPHIBIANS)) as $k => $_) {
+            $name = AMPHIBIANS[$k];
+            $photo = $faker->image($dir=public_path().'/animals-images', 300, 200, ["$name"], false);
+            $photoPath = asset('zoo-park/public/animals-images/'.$photo);
             DB::table('animals')->insert([
-                'name' => AMPHIBIANS[$k],
+                'name' => $name,
                 'specie_id' => 2,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
+                'photo' => rand(0, 3) ? $photoPath : null,
                 'animal_book' => $faker->realText(rand(50, 100)),
                 'manager_id' => DB::table('managers')->select('id')->where('specie_id', 2)->get()[rand(0,2)]->id
             ]);
         }
 
         foreach(range(1, count(BIRDS)) as $k => $_) {
+            $name = BIRDS[$k];
+            $photo = $faker->image($dir=public_path().'/animals-images', 300, 200, ["$name"], false);
+            $photoPath = asset('zoo-park/public/animals-images/'.$photo);
             DB::table('animals')->insert([
-                'name' => BIRDS[$k],
+                'name' => $name,
                 'specie_id' => 3,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
+                'photo' => rand(0, 3) ? $photoPath : null,
                 'animal_book' => $faker->realText(rand(50, 100)),
                 'manager_id' => DB::table('managers')->select('id')->where('specie_id', 3)->get()[rand(0,2)]->id
             ]);
         }
 
         foreach(range(1, count(REPTILES)) as $k => $_) {
+            $name = REPTILES[$k];
+            $photo = $faker->image($dir=public_path().'/animals-images', 300, 200, ["$name"], false);
+            $photoPath = asset('zoo-park/public/animals-images/'.$photo);
             DB::table('animals')->insert([
-                'name' => REPTILES[$k],
+                'name' => $name,
                 'specie_id' => 4,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
+                'photo' => rand(0, 3) ? $photoPath : null,
                 'animal_book' => $faker->realText(rand(50, 100)),
                 'manager_id' => DB::table('managers')->select('id')->where('specie_id', 4)->get()[rand(0,2)]->id
             ]);
         }
 
         foreach(range(1, count(FISH)) as $k => $_) {
+            $name = FISH[$k];
+            $photo = $faker->image($dir=public_path().'/animals-images', 300, 200, ["$name"], false);
+            $photoPath = asset('zoo-park/public/animals-images/'.$photo);
             DB::table('animals')->insert([
-                'name' => FISH[$k],
+                'name' => $name,
                 'specie_id' => 5,
                 'birth_year' => $faker->numberBetween($minYear, $currYear),
+                'photo' => rand(0, 3) ? $photoPath : null,
                 'animal_book' => $faker->realText(rand(50, 100)),
                 'manager_id' => DB::table('managers')->select('id')->where('specie_id', 5)->get()[rand(0,2)]->id
             ]);
