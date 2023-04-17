@@ -59,13 +59,13 @@
 <body>
     <h1>{{ $animal->name }}</h1>
     <div class="main">Species: {{ $animal->getSpecie->name }}</div>
-    {{-- <div class="img">
-        @if (!image_type_to_mime_type(exif_imagetype($animal->photo)))
+    <div class="img">
+        @if ($animal->photo)
             <img src="{{ $animal->photo }}" alt="{{ $animal->name }}">
         @else
             <img src="{{ asset('img/no-img.png') }}" alt="{{ $animal->name }}">
         @endif
-    </div> --}}
+    </div>
     <div class="main">Birth Year: <b>{{ $animal->birth_year }}</b></div>
     <div class="main">Manager: {{ $animal->getManager->name }} {{ $animal->getManager->surname }}</div>
     <div class="about">

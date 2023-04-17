@@ -8,7 +8,7 @@
                     <div class="card-header">New animal</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('animal.store') }}">
+                        <form method="POST" action="{{ route('animal.store') }}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" name="animal_name"
@@ -33,6 +33,12 @@
                                     value="{{ old('animal_birth_year') }}">
                                 <small class="form-text text-muted">Birth year of the animal.</small>
                             </div>
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <input type="file" class="form-control" name="animal_photo">
+                                <small class="form-text text-muted">Animal image.</small>
+                            </div>
+
                             <div class="form-group">
                                 <label>Animal Book</label>
                                 <textarea class="form-control" name="animal_about">{{ old('animal_about') }}</textarea>

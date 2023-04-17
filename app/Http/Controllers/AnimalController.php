@@ -102,6 +102,17 @@ class AnimalController extends Controller
     public function store(StoreAnimalRequest $request)
     {
         $animal = new Animal;
+
+        $file = $request->file('animal_photo');
+        if ($file) {
+            $ext = $file->getClientOriginalExtension();
+            $name = rand(1000000, 9999999).'_'.rand(1000000, 9999999);
+            $name .= '.'.$ext;
+
+            $destinationPath = public_path().'/animals-images/';
+            $file->move($destinationPath, $name);
+            $animal->photo = asset('/animals-images/'.$name);
+        }
         $animal->name = $request->animal_name;
         $animal->specie_id = $request->specie_id;
         $animal->birth_year = $request->animal_birth_year;
@@ -144,6 +155,36 @@ class AnimalController extends Controller
      */
     public function update(UpdateAnimalRequest $request, Animal $animal)
     {
+        $file = $request->file('animal_photo');
+
+        if ($file) {
+            $ext = $file->getClientOriginalExtension();
+            $name = rand(1000000, 9999999).'_'.rand(1000000, 9999999);
+            $name .= '.'.$ext;
+            $destinationPath = public_path().'/animals-images/';
+
+            $file->move($destinationPath, $name);
+
+            $oldPhoto = $animal->photo ?? '@@@';
+            $animal->photo = asset('/animals-images/'.$name);
+
+            // Trinam sena, jeigu ji yra
+            $oldName = explode('/', $oldPhoto);
+            $oldName = array_pop($oldName);
+            if (file_exists($destinationPath.$oldName)) {
+                unlink($destinationPath.$oldName);
+            }
+        }
+        if ($request->animal_photo_deleted) {
+            $destinationPath = public_path().'/animals-images/';
+            $oldPhoto = $animal->photo ?? '@@@';
+            $animal->photo = null;
+            $oldName = explode('/', $oldPhoto);
+            $oldName = array_pop($oldName);
+            if (file_exists($destinationPath.$oldName)) {
+                unlink($destinationPath.$oldName);
+            }
+        }
         $animal->name = $request->animal_name;
         $animal->specie_id = $request->specie_id;
         $animal->birth_year = $request->animal_birth_year;
@@ -161,6 +202,15 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
+        $destinationPath = public_path().'/animals-images/';
+        $oldPhoto = $animal->photo ?? '@@@';
+
+        // Trinam sena, jeigu ji yra
+        $oldName = explode('/', $oldPhoto);
+        $oldName = array_pop($oldName);
+        if (file_exists($destinationPath.$oldName)) {
+            unlink($destinationPath.$oldName);
+         }
         $animal->delete();
         return redirect()->route('animal.index')->with('success_message', 'Gyvūnas sėkmingai ištrintas.');
     }

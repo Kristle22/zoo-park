@@ -8,7 +8,7 @@
                     <div class="card-header">Animal edit</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('animal.update', $animal) }}">
+                        <form method="POST" action="{{ route('animal.update', $animal) }}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" name="animal_name"
@@ -32,6 +32,23 @@
                                 <input type="text" class="form-control" name="animal_birth_year"
                                     value="{{ old('animal_birth_year', $animal->birth_year) }}">
                                 <small class="form-text text-muted">Enter birth year of the animal.</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <div class="img mb-2">
+                                    @if ($animal->photo)
+                                        <img src="{{ $animal->photo }}" alt="{{ $animal->name }}">
+                                    @else
+                                        <img src="{{ asset('img/no-img.png') }}" alt="{{ $animal->name }}">
+                                    @endif
+                                </div>
+                                <div class="mb-2">
+                                    <input type="checkbox" class="form-check-input me-1" name="animal_photo_deleted"
+                                        id="df">
+                                    <label for="df">Delete photo</label>
+                                </div>
+                                <input type="file" class="form-control" name="animal_photo">
+                                <small class="form-text text-muted">Animal image.</small>
                             </div>
                             <div class="form-group">
                                 <label>Animal Book</label>
