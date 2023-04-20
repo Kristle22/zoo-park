@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SpecieController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\AnimalController;
+use Inertia\Inertia; // rendering React components
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,21 @@ use App\Http\Controllers\AnimalController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})
+// ->middleware(['auth', 'verified'])->name('dashboard')
+; // from resources/js/Pages/{name}.jsx
+
+// Route::inertia('/labas', 'LabasComponent');
+Route::get('/labas', function () {
+    return Inertia::render('Users/LabasComponent');
+});
+
+Route::get('/labas-b', function () {
+    return view('labas');
+});
 
 Route::get('/', function () {
     return view('welcome');

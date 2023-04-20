@@ -5,7 +5,13 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+import '../scss/app.scss';
+// import { createApp } from 'vue';
+import React from 'react';
+import { render } from 'react-dom';
+import { createInertiaApp } from '@inertiajs/inertia-react';
+import { InertiaProgress } from '@inertiajs/progress';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -13,10 +19,21 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+// const app = createApp({});
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+createInertiaApp({
+  title: (title) => `${title} - ${appName}`,
+  // React components from resources/js/Pages folder
+  resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+  setup({ el, App, props }) {
+    return render(<App {...props} />, el);
+  },
+})
+
+InertiaProgress.init({ color: '#4B5563' });
+// import ExampleComponent from './components/ExampleComponent.vue';
+// app.component('example-component', ExampleComponent);
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,7 +53,7 @@ app.component('example-component', ExampleComponent);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');
+// app.mount('#app');
 
 $(document).ready(function () {
   $('[name=animal_about]').summernote();

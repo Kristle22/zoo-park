@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/scss/app.scss', 'resources/js/app.jsx'])
 
     <!-- include summernote css/js without bootstrap (lite)-->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
